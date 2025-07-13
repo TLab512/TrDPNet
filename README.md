@@ -55,6 +55,14 @@ You can train using the default configuration, but please remember to modify the
 ```
 python train.py
 ```
+# Testing
+
+The pre-trained model can be found [Here](https://drive.google.com/drive/folders/1_L8jNNRO61MOYngga97T3HNcfFThxDAw?usp=sharing).
+
+Testing bash
+```
+python main.py run.job=sample run.name=TrDPNet_sample checkpoint.resume='path_to_the_ckp'
+```
 
 
 # Acknowledgements
