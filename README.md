@@ -64,6 +64,18 @@ Testing bash
 python main.py run.job=sample run.name=TrDPNet_sample checkpoint.resume='path_to_the_ckp'
 ```
 
+# Citation
+If you find TrDPNet to be useful for your work, please consider citing our paper:
+```
+@article{li2025trdpnet,
+  title={TrDPNet: A transformer-based diffusion model for single-image 3D point cloud reconstruction},
+  author={Li, Fei and Li, Tiansong and Xiao, Ke and Wang, Lin and Yu, Li},
+  journal={Journal of Visual Communication and Image Representation},
+  pages={104503},
+  year={2025},
+  publisher={Elsevier}
+}
+```
 
 # Acknowledgements
 This repository modified from [PC^2](https://github.com/lukemelas/projection-conditioned-point-cloud-diffusion).
