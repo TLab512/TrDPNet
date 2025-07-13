@@ -157,9 +157,9 @@ class MultiViewPointCloudDiffusionModel(ModelMixin):
         extra_step_kwargs = {"eta": eta} if accepts_eta else {}
 
         # Loop over timesteps
+        scheduler.timesteps = scheduler.timesteps.to(self.device)
         progress_bar = tqdm(scheduler.timesteps.to(self.device))
 
-        # Loop over timesteps
         all_outputs = []
         return_all_outputs = (return_sample_every_n_steps > 0)
 
@@ -231,12 +231,14 @@ class MultiViewPointCloudDiffusionModel(ModelMixin):
         assert x.shape[2] == 3
         return Pointclouds(points=points)
 
-    def forward(self, data, mode: str = 'train', return_sample_every_n_steps: int = -1):
+    def forward(self, data, mode: str = 'train', scheduler='ddpm', num_inference_steps=1000,
+                return_sample_every_n_steps: int = -1):
         cameras = self.build_cameras(data)
         if mode == 'train':
             return self.forward_train(data['label'].to(self.device), data['images'].to(self.device), cameras)
         elif mode == 'sample':
-            return self.forward_sample(self.n_points, data['images'].to(self.device), cameras,
+            return self.forward_sample(self.n_points, data['images'].to(self.device), cameras, scheduler=scheduler,
+                                       num_inference_steps=1000,
                                        return_sample_every_n_steps=return_sample_every_n_steps)
         else:
             raise NotImplementedError()

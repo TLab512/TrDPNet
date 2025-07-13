@@ -51,7 +51,7 @@ class PointCloudMultiViewModelConfig:
     # Feature extraction arguments
     image_size: int = '${dataset.image_size}'
     image_feature_model: str = 'vit_base_patch16_224_mae'  # or 'vit_base_patch16_224_mae' or 'identity' or 'vit_small_patch16_224_msn'
-    w: float = 2.5
+    w: float = 3.0
     scale_factor: float = "${dataset.scale_factor}"
     # TODO
     # # New for the rebuttal
@@ -98,7 +98,7 @@ class PointCloudDatasetConfig(DatasetConfig):
 @dataclass
 class ShapeNetR2N2Config(PointCloudDatasetConfig):
     n_views: int = 1
-    dataset_path: str = '/mnt/d/datasets/ShapeNetPart.v1'
+    dataset_path: str = '/mnt/e/datasets/ShapeNetPart.v1'
     model_path: str = dataset_path + '/%s/%s/model.obj'
     camera_path: str = dataset_path + '/%s/%s/rendering/rendering_metadata.txt'
     dataset: str = dataset_path + '/cat1000.json'

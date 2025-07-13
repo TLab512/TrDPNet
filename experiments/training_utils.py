@@ -284,7 +284,22 @@ def resume_from_checkpoint(cfg: MultiViewConfig, model, optimizer=None, schedule
     if any(k.startswith('module.') for k in state_dict.keys()):
         state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
         print('Removed "module." from checkpoint state dict')
-    missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=False)
+
+    new_state_dict = {}
+    for k, v in state_dict.items():
+        parts = k.split('.')
+        # 替换前两个 mamba
+        replaced = 0
+        for i in range(len(parts)):
+            if parts[i] == 'mamba':
+                if replaced == 0:
+                    parts[i] = 'encoder'
+                elif replaced == 1:
+                    parts[i] = 'attn'
+                replaced += 1
+        new_key = '.'.join(parts)
+        new_state_dict[new_key] = v
+    missing_keys, unexpected_keys = model.load_state_dict(new_state_dict, strict=False)
     print(f'Loaded model checkpoint key {key} from {cfg.checkpoint.resume}')
     if len(missing_keys):
         print(f' - Missing_keys: {missing_keys}')
